@@ -1,77 +1,111 @@
-import React, { useState, useEffect } from 'react';
-import purpleBoi from './assets/purpleBoi.png';
-import { useMediaQuery } from 'react-responsive'
-import testPicture from './images/Screenshot (15).png';
-const images = import.meta.glob("./images/*")
+import React, { useState, useEffect } from "react";
+import purpleBoi from "./assets/purpleBoi.png";
+import { useMediaQuery } from "react-responsive";
+import testPicture from "./images/Screenshot (15).png";
+import dates from './assets/dates.json';
+const images = import.meta.glob("./images/*");
 
 const getRandomImage = async () => {
   const imageKeys = Object.keys(images);
   const randomKey = imageKeys[Math.floor(Math.random() * imageKeys.length)];
   const imageURL = (await images[randomKey]()).default;
-  console.log(imageURL)
   return imageURL;
 };
 
-
 const Polaroid = ({ picture, description, isMobile }) => {
-  console.log("PICTURE",picture);
   const polaroidLaptopStyle = {
-    position: 'relative',
-    height: '80vh',
-    width:'auto',
-    backgroundColor: '#fff',
-    padding: '15px',
-    boxShadow: '0px 10px 20px rgba(0, 0, 0, 0.2)',
-    borderRadius: '10px',
-    overflow: 'hidden',
-    display: 'flex',
-    flexDirection: 'column',
-    alignItems: 'center',
-    textAlign: 'center',
+    position: "relative",
+    height: "75vh",
+    width: "auto",
+    backgroundColor: "#fff",
+    padding: "15px",
+    boxShadow: "0px 10px 20px rgba(0, 0, 0, 0.2)",
+    borderRadius: "10px",
+    overflow: "hidden",
+    display: "flex",
+    flexDirection: "column",
+    alignItems: "center",
+    textAlign: "center",
   };
 
-  const polaroidMobileStyle={
-    position: 'relative',
-    height: '90%',
-    backgroundColor: '#fff',
-    padding: '1vh',
-    boxShadow: '0px 10px 20px rgba(0, 0, 0, 0.2)',
-    borderRadius: '10px',
-    overflow: 'hidden',
-    display: 'flex',
-    flexDirection: 'column',
-    alignItems: 'center',
-    textAlign: 'center',
-  }
+  const polaroidMobileStyle = {
+    position: "relative",
+    width: "90vw",
+    height: "auto",
+    backgroundColor: "#fff",
+    padding: "1vh",
+    boxShadow: "0px 10px 20px rgba(0, 0, 0, 0.2)",
+    borderRadius: "10px",
+    overflow: "hidden",
+    display: "flex",
+    flexDirection: "column",
+    alignItems: "center",
+    textAlign: "center",
+  };
 
-  const imageStyle = {
-    width: '100%',
-    height: 'auto',
-    borderRadius: '5px',
+  const imageLaptopStyle = {
+    width: "auto",
+    height: "100%",
+    borderRadius: "5px",
+  };
+
+  const imageMobileStyle = {
+    width: "100%",
+    height: "auto",
+    borderRadius: "5px",
   };
 
   const descriptionStyle = {
-    fontFamily: 'RustyColaPen, sans-serif',
-    fontSize: '2vw',
+    fontFamily: "RustyColaPen, sans-serif",
+    fontSize: "2vw",
     marginBottom: 0,
-    marginTop: '10px',
+    marginTop: "10px",
   };
 
   return (
-    <div style={isMobile?polaroidMobileStyle:polaroidLaptopStyle} className="polaroid">
-      <img src={picture} alt="Polaroid Picture" style={imageStyle} />
+    <div
+      style={isMobile ? polaroidMobileStyle : polaroidLaptopStyle}
+      className="polaroid"
+    >
+      <img
+        src={picture}
+        alt="Polaroid Picture"
+        style={isMobile ? imageMobileStyle : imageLaptopStyle}
+      />
       <p style={descriptionStyle}>{description}</p>
     </div>
   );
 };
 
 const App = () => {
-  const [randomPicture, setRandomPicture] = useState('');
-  const [date,setDate] = useState('');
-  const isTabletOrMobile = useMediaQuery({ query: '(max-width: 720px)' })
+  const [randomPicture, setRandomPicture] = useState("");
+  const [date, setDate] = useState("");
+  const isTabletOrMobile = useMediaQuery({ query: "(max-width: 720px)" });
+  
+  const nextImage = [
+    "INNONDU",
+    "ONE MORE",
+    "GIIIIIVEEE",
+    "GREEDY OR WHAT SEND ONE MORE",
+    "WOW NICE PICTURE NOW ONE MORE",
+    "SAAKAGILLA INNU BEKU",
+    "MORE MORE MORE",
+    "MAD OR WHAT I/U/WE LOOK SO CUTE GIVE MORE",
+    "WE ARE SO COOL",
+    "DAMN WE SO SEXY SEND ONE MORE",
+    "1 MORE",
+    "ME+U=SO CUTE",
+    "DAMN WE RAN OUT OF PICS JK LOL PRESS HERE",
+    "TULU BARPUNDA? VANTAE VANTAE BARPUNDU",
+    "AYUKTHA OR YANISH"
+  ];
   const loadImage = async () => {
+    setRandomPicture(null);
     const image = await getRandomImage();
-    console.log('IMAGE', image);
+    console.log("IMAGE", image);
+    var fileName=image.split('/').pop();
+    console.log(dates)
+    setDate(dates[fileName]);
     setRandomPicture(image);
   };
 
@@ -80,95 +114,90 @@ const App = () => {
   }, []);
 
   const madeByTextStyle = {
-    fontFamily: 'KidPrint, sans-serif',
-    fontSize: '3.2vh',
-    position: 'absolute',
-    top: '75%',
-    left: '70%',
-    transform: 'translate(-50%, -50%)',
+    fontFamily: "KidPrint, sans-serif",
+    fontSize: "3.2vh",
+    position: "absolute",
+    top: "75%",
+    left: "70%",
+    transform: "translate(-50%, -50%)",
   };
 
   const arrowStyle1 = {
-    width: 'auto',
-    position: 'fixed',
-    bottom: '14vh',
-    right: '7vw',
-    height: '7vh',
-    borderRadius: '5px',
+    width: "auto",
+    position: "fixed",
+    bottom: "14vh",
+    right: "7vw",
+    height: "7vh",
+    borderRadius: "5px",
   };
   const arrowStyle2 = {
-    width: 'auto',
-    position: 'fixed',
-    bottom: '15vh',
-    right: '0vw',
-    height: '7vh',
-    borderRadius: '5px',
-    transform: 'rotate(45deg)',
+    width: "auto",
+    position: "fixed",
+    bottom: "15vh",
+    right: "0vw",
+    height: "7vh",
+    borderRadius: "5px",
+    transform: "rotate(45deg)",
   };
   const arrowStyle3 = {
-    width: 'auto',
-    position: 'fixed',
-    bottom: '2vh',
-    right: '12vw',
-    height: '7vh',
-    borderRadius: '5px',
-    transform: 'rotate(230deg) scaleX(-1)',
+    width: "auto",
+    position: "fixed",
+    bottom: "2vh",
+    right: "12vw",
+    height: "7vh",
+    borderRadius: "5px",
+    transform: "rotate(230deg) scaleX(-1)",
   };
   const ovalStyle = {
-    width: 'auto',
-    height: '25vh',
+    width: "auto",
+    height: "25vh",
   };
 
   const madeByStyle = {
-    position: 'fixed',
+    position: "fixed",
     bottom: 0,
     right: 0,
-    textAlign: 'center',
+    textAlign: "center",
   };
 
   return (
-    // (isTabletOrMobile)?
-    // <p>HELLOOO</p>
-    // :
     <div
       style={{
-        display: 'flex',
-        justifyContent: 'center',
-        alignItems: 'center',
-        flexDirection: 'column',
+        display: "flex",
+        justifyContent: "center",
+        alignItems: "center",
+        flexDirection: "column",
       }}
     >
-      {/* <Polaroid picture={testPicture} description={date} isMobile={isTabletOrMobile}/> */}
-      <Polaroid picture={randomPicture} description={date} isMobile={isTabletOrMobile}/>
-      {/* <img src={arrow} alt="Polaroid Picture" style={arrowStyle1} />
-      <img src={arrow} alt="Polaroid Picture" style={arrowStyle2} />
-      <img src={arrow} alt="Polaroid Picture" style={arrowStyle3} /> */}
+      <Polaroid
+        picture={randomPicture}
+        description={date}
+        isMobile={isTabletOrMobile}
+      />
       <button
         style={{
-          backgroundColor: '#663399',
-          color: '#efe6ff',
-          width: '20vw',
-          height: '10vh',
-          borderRadius: '1.5vh',
-          border: 'none',
-          fontSize: '1.2rem',
-          cursor: 'pointer',
-          boxShadow: '0 4px 6px rgba(66, 165, 245, 0.2)',
-          transition: 'background-color 0.3s ease-in-out',
-          outline: 'none',
-          margin: '10px',
-          display: 'inline-block',
-          fontWeight: 'bold',
-          textDecoration: 'none',
-          position:'absolute',
-          top:"80%"
+          backgroundColor: "#663399",
+          color: "#efe6ff",
+          borderRadius: "1.5vh",
+          border: "none",
+          fontSize: "1.2rem",
+          cursor: "pointer",
+          boxShadow: "0 4px 6px rgba(66, 165, 245, 0.2)",
+          transition: "background-color 0.3s ease-in-out",
+          outline: "none",
+          margin: "10px",
+          display: "inline-block",
+          fontWeight: "bold",
+          textDecoration: "none",
+          position: "absolute",
+          top: "82vh",
+          width: "20vw",
         }}
-      onClick={()=>{
-        loadImage();
-      }
-      }
+        onClick={() => {
+          loadImage();
+        }}
       >
-        Another random picture
+        {nextImage[Math.floor(Math.random() * nextImage.length)]}
       </button>
       <div style={madeByStyle}>
         <div style={madeByTextStyle}> Made by Purple Boi</div>
