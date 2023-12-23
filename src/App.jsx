@@ -17,7 +17,8 @@ const Polaroid = ({ picture, description, isMobile }) => {
   console.log("PICTURE",picture);
   const polaroidLaptopStyle = {
     position: 'relative',
-    width: '54.5vw',
+    height: '80vh',
+    width:'auto',
     backgroundColor: '#fff',
     padding: '15px',
     boxShadow: '0px 10px 20px rgba(0, 0, 0, 0.2)',
@@ -31,7 +32,7 @@ const Polaroid = ({ picture, description, isMobile }) => {
 
   const polaroidMobileStyle={
     position: 'relative',
-    width: '90%',
+    height: '90%',
     backgroundColor: '#fff',
     padding: '1vh',
     boxShadow: '0px 10px 20px rgba(0, 0, 0, 0.2)',
