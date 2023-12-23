@@ -1,12 +1,12 @@
 
 @font-face {
   font-family: 'RustyColaPen';
-  src: local('RustyColaPen'), url(./fonts/RustyColaPen-Allcaps.otf) format('opentype');
+  src: local('RustyColaPen'), url(../fonts/RustyColaPen-Allcaps.otf) format('opentype');
 }
 
 @font-face {
   font-family: 'KidPrint';
-  src: local('KidPrint'), url(./fonts/KidprintMTProRegular.otf) format('opentype');
+  src: local('KidPrint'), url(../fonts/KidprintMTProRegular.otf) format('opentype');
 
 }
 :root{
