@@ -2,6 +2,16 @@ import React, { useState, useEffect } from 'react';
 import purpleBoi from './assets/purpleBoi.png';
 import { useMediaQuery } from 'react-responsive'
 import testPicture from './images/Screenshot (15).png';
+const images = import.meta.glob("./images/*")
+
+const getRandomImage = async () => {
+  const imageKeys = Object.keys(images);
+  const randomKey = imageKeys[Math.floor(Math.random() * imageKeys.length)];
+  const imageURL = (await images[randomKey]()).default;
+  console.log(imageURL)
+  return imageURL;
+};
+
 const Polaroid = ({ picture, description, isMobile }) => {
   console.log("PICTURE",picture);
   const polaroidLaptopStyle = {
@@ -57,20 +67,14 @@ const App = () => {
   const [randomPicture, setRandomPicture] = useState('');
   const [date,setDate] = useState('');
   const isTabletOrMobile = useMediaQuery({ query: '(max-width: 720px)' })
-
-  const fetchPicture=()=>{
-    console.log('FETCHING')
-    fetch('/random-image')
-      .then(response => response.json())
-      .then(data => {
-        setRandomPicture(data.imageUrl);
-        setDate(data.date)
-      })
-      .catch(error => console.error('Error fetching random image:', error));
-  }
+  const loadImage = async () => {
+    const image = await getRandomImage();
+    console.log('IMAGE', image);
+    setRandomPicture(image);
+  };
 
   useEffect(() => {
-    // fetchPicture()
+    loadImage();
   }, []);
 
   const madeByTextStyle = {
@@ -133,7 +137,7 @@ const App = () => {
       }}
     >
       {/* <Polaroid picture={testPicture} description={date} isMobile={isTabletOrMobile}/> */}
-      <Polaroid picture={testPicture} description={date} isMobile={isTabletOrMobile}/>
+      <Polaroid picture={randomPicture} description={date} isMobile={isTabletOrMobile}/>
       {/* <img src={arrow} alt="Polaroid Picture" style={arrowStyle1} />
       <img src={arrow} alt="Polaroid Picture" style={arrowStyle2} />
       <img src={arrow} alt="Polaroid Picture" style={arrowStyle3} /> */}
@@ -157,8 +161,9 @@ const App = () => {
           position:'absolute',
           top:"80%"
         }}
-      onClick={()=>{}
-        // fetchPicture()
+      onClick={()=>{
+        loadImage();
+      }
       }
       >
         Another random picture
