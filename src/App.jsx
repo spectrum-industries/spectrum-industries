@@ -12,6 +12,7 @@ const getRandomImage = async () => {
   return imageURL;
 };
 
+
 const Polaroid = ({ picture, description, isMobile }) => {
   console.log("PICTURE",picture);
   const polaroidLaptopStyle = {
