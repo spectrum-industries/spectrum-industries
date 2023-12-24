@@ -112,9 +112,8 @@ const App = () => {
   const loadImage = async () => {
     setRandomPicture(null);
     const image = await getRandomImage();
-    console.log("IMAGE", image);
     var fileName=image.split('/').pop();
-    console.log(dates)
+    console.log(fileName,dates[fileName])
     setDate(dates[fileName]);
     setRandomPicture(image);
   };
