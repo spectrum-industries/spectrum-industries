@@ -4,7 +4,7 @@ import { useMediaQuery } from "react-responsive";
 import testPicture from "./images/Screenshot (15).png";
 import dates from './assets/dates.json';
 import { AwesomeButtonProgress } from 'react-awesome-button';
-
+import { useOrientation } from "@uidotdev/usehooks";
 const images = import.meta.glob("./images/*");
 
 const getRandomImage = async () => {
@@ -31,6 +31,7 @@ const Polaroid = ({ picture, description, isMobile }) => {
   };
 
   const polaroidMobileStyle = {
+    marginTop:'12vh',
     position: "relative",
     width: "90vw",
     height: "auto",
@@ -57,7 +58,14 @@ const Polaroid = ({ picture, description, isMobile }) => {
     borderRadius: "5px",
   };
 
-  const descriptionStyle = {
+  const descriptionMobileStyle = {
+    fontFamily: "RustyColaPen, sans-serif",
+    fontSize: "3vh",
+    // marginBottom: "10px",
+    marginTop: "2vh",
+  };
+
+  const descriptionLaptopStyle = {
     fontFamily: "RustyColaPen, sans-serif",
     fontSize: "5vh",
     // marginBottom: "10px",
@@ -74,7 +82,7 @@ const Polaroid = ({ picture, description, isMobile }) => {
         alt="Polaroid Picture"
         style={isMobile ? imageMobileStyle : imageLaptopStyle}
       />
-      <p style={descriptionStyle}>{description}</p>
+      <p style={isMobile ? descriptionMobileStyle : descriptionLaptopStyle}>{description}</p>
     </div>
   );
 };
@@ -83,7 +91,7 @@ const App = () => {
   const [randomPicture, setRandomPicture] = useState("");
   const [date, setDate] = useState("");
   const isTabletOrMobile = useMediaQuery({ query: "(max-width: 720px)" });
-  
+  const orientation = useOrientation();
   const nextImage = [
     "INNONDU",
     "ONE MORE",
@@ -171,8 +179,13 @@ const App = () => {
         flexDirection: "column",
       }}
     >
-      
-      {(randomPicture)?
+
+      {
+        (
+        orientation.type=="landscape-primary"
+
+        )?
+      (randomPicture)?
       <><Polaroid
         picture={randomPicture}
         description={date}
@@ -184,7 +197,7 @@ const App = () => {
           color: "#efe6ff",
           borderRadius: "1.5vh",
           border: "none",
-          fontSize: "1.2rem",
+          fontSize: "4vh",
           cursor: "pointer",
           boxShadow: "0 4px 6px rgba(66, 165, 245, 0.2)",
           transition: "background-color 0.3s ease-in-out",
@@ -206,7 +219,10 @@ const App = () => {
       </>
       :
       <p>loading wait have some patience</p>
-      }
+      
+    :
+    <p>TURN PHONE AROUND OTHERWISE ILL BEAT U UP</p>
+    }
       <div style={madeByStyle}>
         <div style={madeByTextStyle}> Made by Purple Boi</div>
         <img src={purpleBoi} alt="Polaroid Picture" style={ovalStyle} />
