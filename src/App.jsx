@@ -3,6 +3,8 @@ import purpleBoi from "./assets/purpleBoi.png";
 import { useMediaQuery } from "react-responsive";
 import testPicture from "./images/Screenshot (15).png";
 import dates from './assets/dates.json';
+import { AwesomeButtonProgress } from 'react-awesome-button';
+
 const images = import.meta.glob("./images/*");
 
 const getRandomImage = async () => {
@@ -45,7 +47,7 @@ const Polaroid = ({ picture, description, isMobile }) => {
 
   const imageLaptopStyle = {
     width: "auto",
-    height: "100%",
+    height: "90%",
     borderRadius: "5px",
   };
 
@@ -57,9 +59,9 @@ const Polaroid = ({ picture, description, isMobile }) => {
 
   const descriptionStyle = {
     fontFamily: "RustyColaPen, sans-serif",
-    fontSize: "2vw",
-    marginBottom: 0,
-    marginTop: "10px",
+    fontSize: "5vh",
+    // marginBottom: "10px",
+    marginTop: "2vh",
   };
 
   return (
@@ -169,7 +171,9 @@ const App = () => {
         flexDirection: "column",
       }}
     >
-      <Polaroid
+      
+      {(randomPicture)?
+      <><Polaroid
         picture={randomPicture}
         description={date}
         isMobile={isTabletOrMobile}
@@ -190,7 +194,7 @@ const App = () => {
           fontWeight: "bold",
           textDecoration: "none",
           position: "absolute",
-          top: "82vh",
+          top: "83vh",
           width: "20vw",
         }}
         onClick={() => {
@@ -199,6 +203,10 @@ const App = () => {
       >
         {nextImage[Math.floor(Math.random() * nextImage.length)]}
       </button>
+      </>
+      :
+      <p>loading wait have some patience</p>
+      }
       <div style={madeByStyle}>
         <div style={madeByTextStyle}> Made by Purple Boi</div>
         <img src={purpleBoi} alt="Polaroid Picture" style={ovalStyle} />
